@@ -1,0 +1,30 @@
+HELP.md
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+/src/**
+!/src/cordingTest/
+!/src/cordingTest/**
+
+#src/assignment/
+#src/base64/
+#src/exam/
+#src/global/
+#src/InheritanceTest/
+#src/reflection/
+#src/string/
+#src/test/
