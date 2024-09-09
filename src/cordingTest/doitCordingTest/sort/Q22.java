@@ -1,65 +1,43 @@
 package cordingTest.doitCordingTest.sort;
 
 import java.io.*;
-import java.util.*;
 
 /**
  * 백준 10989
  * 1. 시간 초과 - Scanner, System.out -> BufferedReader 및 BufferedWriter로 수정
  * 2. 메모리 초과 - Queue -> 기본 배열로 수정 (합 배열 이용)
+ * 3. 계수 정렬 이용
  */
 public class Q22 {
     public static void main(String[] args) throws IOException {
+        // 계수 정렬
+        // 1. 데이터가 양수
+        // 2. 데이터 크기가 매우 작아야한다. (데이터 하나의 값, 최대 갯수가 아니다.)
+
+        // 계수정렬은 데이터가 들어오면 index로 본다.
+        // 데이터를 입력받아 값에 해당하는 index값을 증가시켜준다.
+        // 배열을 처음부터 끝까지 탐색하면서 값이 0이 아닐 경우 해당 값이 있는 index를 값만큼 반복하여 출력
+        // ex) a[10] = {0,1,2,0,0,0,0,0,0,0} => 출력: 1 2 2
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
+        int maxSize = 10001;
 
-        int[] a = new int[n];
-
-        for (int i=0; i<n; i++) {
-            a[i] = Integer.parseInt(br.readLine());
-        }
-
-        int maxSize = 5;
-
-//        // 메모리 초과로 Queue 사용 X
-//        Queue<Integer>[] bucket = new LinkedList[10];
-
-        int count = 0;
-        int radix = 1;
-        while (count < maxSize) {
-            int[] output = new int[n];
-            int[] bucket = new int[10];
-
-            for (int i=0; i<n; i++) {
-                bucket[a[i] / radix % 10]++;
-            }
-
-            for(int i=1; i<10; i++) {
-                // 합배열 이용해 첫 index를 계산한다.
-                // 예를들어 bucket[3] = 4, bucket[4] = 7라면
-                // 자릿수 3에 해당하는 값들은 인덱스 3부터 시작하고, 자릿수 4에 해당하는 값들은 인덱스 6부터 시작한다는 의미 (배열의 인덱스는 0부터이므로 -1)
-                bucket[i] += bucket[i-1];
-            }
-
-            // 현재 자리수를 기준으로 정렬
-            for (int i=n-1; i>=0; i--) {
-                // 위에서 구한 index로 정렬 시작
-                // 한번 구하면 index--를 해준다.
-                output[bucket[a[i] / radix % 10]-- -1] = a[i];
-            }
-
-            for (int i=0; i<n; i++) {
-                a[i] = output[i];
-            }
-
-            radix *= 10;
-            count++;
-        }
+        int[] count = new int[maxSize];
 
         for (int i=0; i<n; i++) {
-            bw.write(a[i]+"\n");
+            count[Integer.parseInt(br.readLine())]++;
+        }
+
+        for (int i=0; i<maxSize; i++) {
+            if (count[i] != 0) {
+                // index만큼 반복하여 출력해준다.
+                for (int j=0; j<count[i]; j++) {
+                    bw.write(i + "\n");
+                }
+            }
         }
 
         bw.flush();
