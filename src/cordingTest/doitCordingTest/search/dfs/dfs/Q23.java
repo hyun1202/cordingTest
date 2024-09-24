@@ -21,7 +21,6 @@ public class Q23 {
         for (int i=0; i<n+1; i++) {
             // A[0]은 사용하지 않는다.
             A[i] = new ArrayList<>();
-            visited[i] = false;
         }
 
         for (int i=0; i<m; i++) {
@@ -55,7 +54,8 @@ public class Q23 {
         visited[v] = true;
 
         for (int i : A[v]) {
-            if (visited[v]) {
+            // "연결 노드" 방문 여부 탐색
+            if (!visited[i]) {
                 DFS(i);
             }
         }
